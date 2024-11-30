@@ -1,0 +1,410 @@
+.calendar-container {
+    background: linear-gradient(180deg, #121212 0%, #1a1a1a 100%);
+    padding: 2.5rem;
+    border-radius: 16px;
+    color: white;
+    min-height: 100vh;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  }
+   
+  .year-selector {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+  }
+  
+  .year-button {
+    padding: 0.75rem 2.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .year-button.active {
+    background: #1DB954;
+    border-color: #1DB954;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(29, 185, 84, 0.3);
+  }
+  
+  .year-button:hover:not(.active) {
+    background: rgba(29, 185, 84, 0.1);
+    border-color: #1DB954;
+  }
+  
+  .year-stats {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 16px;
+    backdrop-filter: blur(10px);
+  }
+  
+  .summary-stats {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin: 0 auto;
+    max-width: 900px;
+  }
+  
+  .summary-stats .stat {
+    flex: 1;
+    padding: 1.5rem;
+    background: rgba(29, 185, 84, 0.05);
+    border: 1px solid rgba(29, 185, 84, 0.1);
+    border-radius: 12px;
+    transition: transform 0.3s ease;
+  }
+  
+  .summary-stats .stat:hover {
+    transform: translateY(-4px);
+    background: rgba(29, 185, 84, 0.1);
+  }
+  
+  .summary-stats .stat span {
+    display: block;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #1DB954;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  
+  .summary-stats .stat label {
+    color: #B3B3B3;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  
+  .months-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2rem;
+    padding: 1rem;
+  }
+  
+  .month-container {
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 16px;
+    padding: 1.5rem;
+    backdrop-filter: blur(10px);
+    transition: transform 0.3s ease;
+  }
+  
+  .month-container:hover {
+    transform: translateY(-4px);
+  }
+  
+  .month-title {
+    color: #1DB954;
+    font-size: 1.25rem;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+  
+  .month-calendar {
+    width: 100%;
+  }
+  
+  .weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+    margin-bottom: 0.75rem;
+  }
+  
+  .weekday {
+    text-align: center;
+    color: #B3B3B3;
+    font-size: 0.75rem;
+    padding: 0.5rem 0;
+    font-weight: 500;
+  }
+  
+  .days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+  }
+  
+  .day {
+    aspect-ratio: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 6px;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .day.empty {
+    background: transparent;
+    cursor: default;
+  }
+  
+  .day.has-data::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: inherit;
+    opacity: 0.7;
+    transition: opacity 0.2s ease;
+  }
+  
+  .day.has-data:hover::before {
+    opacity: 1;
+  }
+  
+  .day:not(.empty):hover {
+    transform: scale(1.15);
+    z-index: 2;
+    box-shadow: 0 4px 12px rgba(29, 185, 84, 0.2);
+  }
+  
+  .day-number {
+    color: white;
+    font-weight: 500;
+    z-index: 1;
+  }
+  
+  .play-count {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin-top: 0.25rem;
+    z-index: 1;
+  }
+  
+  .day-details {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 2rem;
+    animation: modalFadeIn 0.3s ease;
+  }
+  
+  .details-content {
+    background: linear-gradient(135deg, #282828 0%, #1a1a1a 100%);
+    padding: 2.5rem;
+    border-radius: 20px;
+    max-width: 500px;
+    width: 90%;
+    position: relative;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    animation: modalSlideUp 0.3s ease;
+  }
+  
+  .close-details {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: white;
+    width: 36px;
+    height: 36px;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .close-details:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: rotate(90deg);
+  }
+  
+  .details-content h4 {
+    color: #1DB954;
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    line-height: 1.3;
+  }
+  
+  .details-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-bottom: 2rem;
+    background: rgba(255, 255, 255, 0.03);
+    padding: 1.5rem;
+    border-radius: 12px;
+  }
+  
+  .details-tracks {
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 12px;
+    padding: 1.5rem;
+  }
+  
+  .details-tracks h5 {
+    color: #1DB954;
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .track-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+    transition: all 0.2s ease;
+  }
+  
+  .track-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateX(4px);
+  }
+  
+  .track-name {
+    color: white;
+    font-size: 0.875rem;
+    margin-right: 1rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .track-plays {
+    background: rgba(29, 185, 84, 0.2);
+    color: #1DB954;
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+  
+  .calendar-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+    text-align: center;
+    color: #1DB954;
+  }
+  
+  .loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid rgba(29, 185, 84, 0.1);
+    border-top-color: #1DB954;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 1.5rem;
+  }
+  
+  .calendar-error {
+    text-align: center;
+    padding: 3rem;
+    background: rgba(255, 59, 48, 0.1);
+    border-radius: 12px;
+    margin: 2rem;
+  }
+  
+  .calendar-error button {
+    margin-top: 1.5rem;
+    padding: 0.75rem 2rem;
+    background: #1DB954;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .calendar-error button:hover {
+    background: #1ed760;
+  }
+  
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+  
+  @keyframes modalFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  @keyframes modalSlideUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .calendar-container {
+      padding: 1rem;
+    }
+  
+    .year-selector {
+      flex-wrap: wrap;
+    }
+  
+    .year-button {
+      flex: 1;
+      min-width: 100px;
+      padding: 0.75rem 1rem;
+    }
+  
+    .summary-stats {
+      flex-direction: column;
+    }
+  
+    .months-grid {
+      grid-template-columns: 1fr;
+    }
+  
+    .details-content {
+      padding: 1.5rem;
+      margin: 1rem;
+    }
+  
+    .details-stats {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  @media (min-width: 1440px) {
+    .months-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
