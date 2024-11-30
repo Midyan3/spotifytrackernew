@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/spotifytrackernew/static/css/main.580f9feb.css",
+    "main.js": "/spotifytrackernew/static/js/main.d57efeae.js",
+    "static/js/453.dc4d1bb7.chunk.js": "/spotifytrackernew/static/js/453.dc4d1bb7.chunk.js",
+    "index.html": "/spotifytrackernew/index.html",
+    "main.580f9feb.css.map": "/spotifytrackernew/static/css/main.580f9feb.css.map",
+    "main.d57efeae.js.map": "/spotifytrackernew/static/js/main.d57efeae.js.map",
+    "453.dc4d1bb7.chunk.js.map": "/spotifytrackernew/static/js/453.dc4d1bb7.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.580f9feb.css",
+    "static/js/main.d57efeae.js"
+  ]
+}
